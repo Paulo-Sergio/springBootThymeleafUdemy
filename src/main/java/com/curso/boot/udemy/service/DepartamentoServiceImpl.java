@@ -39,8 +39,16 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Departamento> buscarTodos(Long id) {
+	public List<Departamento> buscarTodos() {
 		return dao.findAll();
+	}
+
+	@Override
+	public boolean departamentoTemCargos(Long id) {
+		if (buscarPorId(id).getCargos().isEmpty()) {
+			return false;
+		}
+		return true;
 	}
 
 }
