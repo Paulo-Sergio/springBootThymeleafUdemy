@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.curso.boot.udemy.domain.Departamento;
 import com.curso.boot.udemy.service.DepartamentoService;
@@ -14,7 +15,7 @@ import com.curso.boot.udemy.service.DepartamentoService;
 @Controller
 @RequestMapping("/departamentos")
 public class DepartamentoController {
-	
+
 	@Autowired
 	private DepartamentoService service;
 
@@ -22,37 +23,44 @@ public class DepartamentoController {
 	public String cadastrar(Departamento departamento) {
 		return "/departamento/cadastro";
 	}
-	
+
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		model.addAttribute("departamentos", service.buscarTodos());
 		return "/departamento/lista";
 	}
-	
+
 	@PostMapping("/salvar")
-	public String salvar(Departamento departamento) {
+	public String salvar(Departamento departamento, RedirectAttributes attr) {
 		service.salvar(departamento);
+		attr.addFlashAttribute("success", "Departamento inserido com sucesso.");
 		return "redirect:/departamentos/cadastrar";
 	}
-	
+
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("departamento", service.buscarPorId(id));
 		return "/departamento/cadastro";
 	}
-	
+
 	@PostMapping("/editar")
-	public String editar(Departamento departamento) {
+	public String editar(Departamento departamento, RedirectAttributes attr) {
 		service.editar(departamento);
+		attr.addFlashAttribute("success", "Departamento editado com sucesso.");
 		return "redirect:/departamentos/cadastrar";
 	}
-	
+
 	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable("id") Long id, ModelMap model) {
-		if (!service.departamentoTemCargos(id)) {
+	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
+
+		if (service.departamentoTemCargos(id)) {
+			attr.addFlashAttribute("fail", "Departamento não removido. Possui cargo(s) vinculado(s).");
+		} else {
 			service.excluir(id);
+			attr.addFlashAttribute("success", "Departamento excluído com sucesso.");
 		}
-		// return "redirect:/departamentos/listar";
-		return listar(model);
+		
+		// return listar(model);
+		return "redirect:/departamentos/listar";
 	}
 }

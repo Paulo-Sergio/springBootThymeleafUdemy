@@ -57,6 +57,7 @@
 		var url = '';
 		// motando url de exclusão pelo id do botão
 		$('button[id*="btn_"]').click(function () {
+			// [btn, departamentos/excluir/3]
 			url = "http://localhost:8080/" + $(this).attr('id').split("_")[1];
 		});
 		
@@ -64,7 +65,7 @@
 		$('#ok_confirm').click(function () {
 			document.location.href = url;
 		});
-		/* **************************** */
+		/* *************** Modal de exclusão **************** */
 	    
 		$(function() {
 			$('[data-toggle="popover"]').popover();
