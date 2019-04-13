@@ -14,5 +14,5 @@ public interface CargoService {
 	
 	Cargo buscarPorId(Long id);
 	
-	List<Cargo> buscarTodos(Long id);
+	List<Cargo> buscarTodos();
 }

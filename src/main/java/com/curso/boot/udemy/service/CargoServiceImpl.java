@@ -39,7 +39,7 @@ public class CargoServiceImpl implements CargoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Cargo> buscarTodos(Long id) {
+	public List<Cargo> buscarTodos() {
 		return dao.findAll();
 	}
 
