@@ -39,7 +39,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Funcionario> buscarTodos(Long id) {
+	public List<Funcionario> buscarTodos() {
 		return dao.findAll();
 	}
 
