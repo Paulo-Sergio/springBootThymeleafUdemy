@@ -42,7 +42,7 @@ public class FuncionarioController {
 	@PostMapping("/salvar")
 	public String salvar(Funcionario funcionario, RedirectAttributes attr) {
 		funcionarioService.salvar(funcionario);
-		attr.addAttribute("success", "Funcionário inserido com sucesso.");
+		attr.addFlashAttribute("success", "Funcionário inserido com sucesso.");
 		return "redirect:/funcionarios/cadastrar";
 	}
 	
@@ -55,14 +55,14 @@ public class FuncionarioController {
 	@PostMapping("/editar")
 	public String editar(Funcionario funcionario, RedirectAttributes attr) {
 		funcionarioService.editar(funcionario);
-		attr.addAttribute("success", "Funcionário editado com sucesso.");
+		attr.addFlashAttribute("success", "Funcionário editado com sucesso.");
 		return "redirect:/funcionarios/cadastrar";
 	}
 	
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		funcionarioService.excluir(id);
-		attr.addAttribute("success", "Funcionário removido com sucesso.");
+		attr.addFlashAttribute("success", "Funcionário removido com sucesso.");
 		return "redirect:/funcionarios/listar";
 	}
 
